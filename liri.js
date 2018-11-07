@@ -4,6 +4,7 @@ var fs = require('fs');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 var request = require('request');
+var omdb = require('omdb');
 
 // console.log(Spotify);
 // console.log(Twitter);
@@ -13,8 +14,8 @@ var request = require('request');
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
-// console.log(spotify); // ?
-// console.log(client); // ?
+// console.log(spotify);
+// console.log(client); 
 
 // Deconstruct command line entry
 
@@ -87,7 +88,7 @@ function requestSpotify(song) {
   });
 }
 function requestOMDB(movie) {
-
+  var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
 }
 function doWhatSays() {
 
