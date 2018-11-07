@@ -6,24 +6,17 @@ var Spotify = require('node-spotify-api');
 var request = require('request');
 var omdb = require('omdb');
 
-// console.log(Spotify);
-// console.log(Twitter);
-
 // Create Objects using modules' Constructor Functions
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
-
-// console.log(spotify);
-// console.log(client); 
 
 // Deconstruct command line entry
 
 var command = process.argv[2];
 var commandArg = process.argv.slice(3).join(" ");
 
-// console.log(command);
-// console.log(commandArg);
+// Switch app functionality based on command
 
 switch (command) {
   case "my-tweets":
@@ -52,29 +45,27 @@ switch (command) {
 
 function fetchTweets(user) {
   var params = {screen_name: user, count: 20};
+  // API
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	  if (!error) {
-      // console.log(tweets);
-	  	for (i in tweets) {
-        console.log
-(`
-=============Tweet #${parseInt(i) + 1}===============
-${tweets[i].text}
-Tweeted on ${tweets[i].created_at}
-`);
+	  if (error) return console.log(error);
+    for (i in tweets) {
 
-	  	}
-	  } else {
-	  	console.log(error);
-	  }
-	});
+      console.log(`\n\n\t============= Tweet #${parseInt(i) + 1} ===============`);
+      console.log(tweets[i].text.split(" ").slice(0, 12).join(" "));
+      console.log(tweets[i].text.split(" ").slice(12).join(" "));
+      console.log(`\n\tTweeted on ${tweets[i].created_at}`);
+
+    }
+  });
 }
+
 function requestSpotify(song) {
+  // API
   spotify.search({type: 'track', query: song, limit: 1}, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-    // console.log(JSON.stringify(data, null, 2));
+
     console.log(`
       Song Title: ${data.tracks.items[0].name}
       Artist: ${data.tracks.items[0].artists[0].name}
@@ -87,9 +78,12 @@ function requestSpotify(song) {
 
   });
 }
+
 function requestOMDB(movie) {
   var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+  request() // to be completed
 }
-function doWhatSays() {
 
+function doWhatSays() {
+  // to be completed
 }
